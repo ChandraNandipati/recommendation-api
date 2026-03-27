@@ -1,0 +1,55 @@
+1. Login 
+2. SSO  - Single Sign on.
+3. Authentication and Authorization.
+4. UI to API communication and APi to DB communication.
+5. Logging and debugging and exceptions
+6. troubleshooting in prod
+7. Kafka or async programming.
+8. Cron job or EOD jobs. 
+9. Security protocols.
+10. Scaling 
+11. Aws deployment
+12. Complex garbage collection and threads 
+
+
+12 weeks. 3 Month. 
+
+Day 1 : Explain the concept and will do handon.
+Day 2 : Open for any questions
+Day 3 : preapration 
+Day 4 : demo by sneha/swati
+Day 5 : preparation
+Day 6 : demo by swati/sneha
+Day 7 : off
+
+
+Thumb rule: 
+1. Use chatgpt for understanding concepts. but you have to do your own analysis. 
+2. Expect the questions from me in demo. 
+
+Demo : 
+1. Always say the problem statement.
+2. Need flow chart for your workflow.
+3. Medium should be only english.
+4. Demo of code line by line walkthrough.
+5. Live example.
+
+
+Project : 
+We Recommendation portal. 
+
+
+Login : 
+Functionality :
+1. Login.
+2. Forgot password.
+3. Register/Signup/Create 
+
+
+Tech stack : 
+1. Simple react with next js.
+2. Code should be commited to github.
+3. Api layer Springboot java.
+4. Database Postgres.
+
+Logic workflow.
