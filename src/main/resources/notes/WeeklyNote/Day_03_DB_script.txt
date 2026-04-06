@@ -1,0 +1,41 @@
+CREATE SCHEMA auth;
+drop table auth.users;
+
+CREATE TABLE auth.users (
+    id BIGSERIAL PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(50),
+    password VARCHAR(50)
+);
+
+ALTER TABLE auth.users
+ADD CONSTRAINT unique_user_email UNIQUE (email);
+
+
+INSERT INTO auth.users (first_name, last_name, email, password)
+VALUES ('Sneha', 'Kasina', 'sneha@example.com', 'ASas09$$');
+
+select * from auth.users;
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+ALTER TABLE auth.users ADD COLUMN new_id UUID;
+
+UPDATE auth.users SET new_id = gen_random_uuid();
+
+SELECT COUNT(*) FROM auth.users WHERE new_id IS NULL; -- should be 0
+
+ALTER TABLE auth.users DROP CONSTRAINT users_pkey;
+
+ALTER TABLE auth.users RENAME COLUMN id TO old_id;
+
+ALTER TABLE auth.users RENAME COLUMN new_id TO id;
+
+ALTER TABLE auth.users ADD PRIMARY KEY (id);
+
+ALTER TABLE auth.users
+ALTER COLUMN id SET DEFAULT gen_random_uuid();
+
+
+CUrl command for user : 
+curl --location 'http://localhost:8080/api/v1/auth/user?id=1863ed81-4867-43b1-a423-43c8da8cbd57'
