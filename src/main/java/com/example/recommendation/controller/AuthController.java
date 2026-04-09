@@ -1,12 +1,12 @@
 package com.example.recommendation.controller;
 
-
-import com.example.recommendation.dao.UserDao;
 import com.example.recommendation.dto.User;
 import com.example.recommendation.model.LoginRequest;
+import com.example.recommendation.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("api/v1/auth")
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class AuthController {
 
-    private final UserDao userDao;
+    private final UserRepository userRepository;
 
     @PostMapping(
             value="/register",
@@ -22,8 +22,7 @@ public class AuthController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public String registerUser(@RequestBody User user){
-        // later
-        userDao.saveUser(user);
+        userRepository.save(user);
         return "User Saved Successfully";
     }
 
@@ -33,7 +32,15 @@ public class AuthController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public User loginUser(@RequestBody LoginRequest loginRequest){
-        return userDao.loginUser(loginRequest.getEmail(),loginRequest.getPassword());
+        if (loginRequest.getEmail() == null || loginRequest.getPassword() == null) {
+            return null;
+        }
+        return userRepository
+                .findByEmailAndPassword(
+                        loginRequest.getEmail().trim(),
+                        loginRequest.getPassword().trim()
+                )
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
 
@@ -42,6 +49,7 @@ public class AuthController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public User getUser(@RequestParam(name="id") String id){
-        return userDao.getUserById(id);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

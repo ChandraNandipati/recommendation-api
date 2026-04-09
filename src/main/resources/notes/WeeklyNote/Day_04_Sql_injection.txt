@@ -1,0 +1,13 @@
+Day 04 :
+Node js event loop: https://www.youtube.com/watch?v=8aGhZQkoFbQ
+async await.
+
+Did anlysis 
+String SQL is not better — it is unsafe and prone to SQL injection.
+PreparedStatement is the recommended JDBC approach — it is secure and efficient.
+JPA builds on top of PreparedStatement — it generates queries automatically and maps database data to Java objects.
+
+discussed about sql injection 
+and Why id cant be sequence genrated 
+
+clean the code and vm args and applciation profiles
