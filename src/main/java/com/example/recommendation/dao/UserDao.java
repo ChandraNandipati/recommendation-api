@@ -4,12 +4,14 @@ package com.example.recommendation.dao;
 import com.example.recommendation.configuration.DBConfig;
 import com.example.recommendation.dto.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class UserDao{
 
     private final DBConfig dbConfig;
@@ -36,13 +38,21 @@ public class UserDao{
 
     public User loginUser(String email, String password) {
 
-        String sql = "SELECT * FROM auth.users WHERE email = '"
-                + email + "' AND password = '" + password + "'";
+        if (email == null || password == null) {
+            log.warn("Email or password is null");
+            return null;
+        }
 
+        String sql = "SELECT * FROM auth.users WHERE trim(email) = ? AND trim(password) = ?";
+
+        log.info("Executing login query for email: {}", email.trim());
         try (Connection conn = dbConfig.getConnection();
-             Statement stmt = conn.createStatement()) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            ResultSet rs = stmt.executeQuery(sql);
+            stmt.setString(1, email.trim());
+            stmt.setString(2, password.trim());
+
+            ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
                 User user = new User();

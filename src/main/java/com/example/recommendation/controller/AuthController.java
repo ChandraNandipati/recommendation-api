@@ -33,7 +33,7 @@ public class AuthController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public User loginUser(@RequestBody LoginRequest loginRequest){
-        return userDao.loginUser(loginRequest.getEmail(),loginRequest.getEmail());
+        return userDao.loginUser(loginRequest.getEmail(),loginRequest.getPassword());
     }
 
 
