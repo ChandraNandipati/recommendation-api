@@ -1,0 +1,90 @@
+Swagger 
+Thread pool 
+transaction Manager 
+Native query on JPA
+actuator and prometheus
+DB 1NF 2NF 3NF
+
+
+VM args
+Dev Server								QA Server							Prod Server
+DbUrl : devDb                         DbUrl : qaDb  					DbUrl : prodDb  
+Username : devuser					Username : qauser					Username : produser	
+password : devpwd					password :qapwd					    password :prodpwd
+test.sneha: swatidev				test.sneha: swatiqa				   test.sneha: swatiprod
+
+profile based
+Dev Server								QA Server							Prod Server
+Spring.profiles.active : dev        Spring.profiles.active : qa          Spring.profiles.active : prod  
+
+
+application-dev.properties 			application-QA.properties 			application-PROD.properties 
+DbUrl : devDb                       DbUrl : qaDb  					     DbUrl : prodDb  
+Username : devuser					Username : qauser					 Username : produser	
+password : devpwd					password :qapwd					     password :prodpwd
+test.sneha: swatidev				test.sneha: swatiqa				    test.sneha: swatiprod
+
+
+Approach				Pros										     cons
+profile				not relying on infra 			           every change need new SDLC  : build, deploy, restart the server. 
+					PR review and extra eye to review          sensitive data can be leaked as we are pushing to git or bitbucket
+
+Vm Args 			configure on server needs only restart      no track of changes or visibility 
+                    no need of deployment cycle					no version control
+				
+Hybrid Approach : 
+some on vm args some on profile based
+
+VM args
+Dev Server								QA Server							Prod Server
+Username : devuser					Username : qauser					Username : produser	
+password : devpwd					password :qapwd					    password :prodpwd
+Spring.profiles.active : dev        Spring.profiles.active : qa          Spring.profiles.active : prod  
+
+application-dev.properties 			application-QA.properties 			application-PROD.properties 
+DbUrl : devDb                       DbUrl : qaDb  					     DbUrl : prodDb  
+test.sneha: swatidev				test.sneha: swatiqa				     test.sneha: swatiprod
+
+
+
+
+How do give the rest endpoint api contract to frontned ? 
+contract meaning : typeof method : get, post, put, delete 
+mandaotry params
+request body : 
+http code 
+response type
+
+either we use postman collection, curl command 
+and professional way is give swagger url /
+
+Simple Curl command : curl --location 'http://localhost:8080/api/v1/thread/callable/limited?numThreads=3&numTasks=5'
+
+Threads :
+Implement below Example. 
+Sneha Curry Creation : 
+
+Sneha : 
+	1. bowls washing 
+	2. Cuting veggies
+	3. Doing curry 
+	4. serving to glass bowl 
+
+Sneha (main) : 
+	main(idle) 	Swati Thread :                 chandra Thread :
+					1. bowls washing 				2. Cutting veggies
+    main (doing Curry) 
+	
+	main(idle)  Raha Thread : 
+					4. Serving in glass bowl 
+    main(curry is complete)
+
+
+How many threads open ? 
+
+currently it depends on resources.
+need extra resoruces 
+more meory the more threads.
+waht happens if any theread is failure ? 
+
+
