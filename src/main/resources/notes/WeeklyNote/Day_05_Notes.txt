@@ -1,9 +1,6 @@
 Swagger 
 Thread pool 
-transaction Manager 
-Native query on JPA
-actuator and prometheus
-DB 1NF 2NF 3NF
+
 
 
 VM args

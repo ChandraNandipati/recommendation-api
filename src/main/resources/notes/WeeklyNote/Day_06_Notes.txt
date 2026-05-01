@@ -1,0 +1,74 @@
+[Washing,cutting] : 5Sec , 1sec
+
+Washing.get();
+
+cutting.get()
+
+
+Main thread : 
+		Washing Thread  - 5 sec
+		Cutting thread  - 1 sec
+
+10:00 10.01(cutting) -- 10.05 (washing)
+
+10:00 loop 
+washing.get() - 5 sec 10.05
+10.05
+cutting.get() - 1sec 10.01
+
+
+Main thread : 
+		Washing Thread  - 1 sec
+		Cutting thread  - 5 sec
+
+10:00 10.01(Washing) -- 10.05 (Cutting)
+
+10:00 loop 
+washing.get() - 1 sec 10.01
+10.01
+cutting.get() - 1sec 10.05
+
+
+washing done .then(cutting).then(cutting)
+
+future.get()
+cuttingfutures
+
+
+Main thread : 
+		thread 1  : wahsing  curry 
+		thread 2  : cuting  serving
+		
+	thread to show result back: reult.sto string
+		
+		
+Main thread : (10:00)
+	10:01   thread 1  : wahsing  2 10:02
+	10:01   thread 2  : cuting   4 10:04
+10:04 - sneha - 5 : 10:09
+10:09 - raha - 2 : 10:11
+
+main : 10:00 - 10:11
+
+
+Main thread : (10:00) - 10:01
+	10:01   thread 1  : wahsing  2 10:02  10:04 - sneha - 5 : 10:09 
+	10:01   thread 2  : cuting   4 10:04  10:09 - raha - 2 : 10:11
+10:11 main thread : return the response
+
+
+completable future is non blocking it uses then
+
+future is bloking it uses .get()
+
+
+
+Supplier : it doesnt take any thing but get the respone back.
+Function : it takes some thing and give simething back 
+Consumer: it taokes take sime thing but not response
+
+actuator and prometheus
+
+Native query on JPA
+DB 1NF 2NF 3NF
+transaction Manager 
