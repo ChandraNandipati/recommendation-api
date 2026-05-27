@@ -1,0 +1,244 @@
+Db base concepts:
+
+CREATE TABLE students (
+    student_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    student_name VARCHAR(100),
+    student_email VARCHAR(100),
+    student_zipcode VARCHAR(10),
+    student_phone VARCHAR(20)
+);
+ 
+1. Indexing 
+	a. Primary Key : 	
+	  1. only one unique value is allowed for that column. 
+	  2. primary creates the index where we can query directly.
+	  3. Student_name = I want to search
+	  
+	  
+	  select * from students where student_name = 'Sneha'
+	  full scan and compare with each value in row and return the results.
+	  
+	  select * from students where student_id = '12344'
+	  will do lookup and give the record back directly.
+	  
+	b. index on student name: 
+	CREATE INDEX idx_students_student_name ON students(student_name);
+		1. allow duplicates but for faster search
+		
+	c. what happens If i have more indexes. 
+		1. When we are do indexes there should be balance of indexes. if not it will slows down the isnert and also search
+	  
+	  
+2. Unique constraints 
+  A. CREATE UNIQUE INDEX idx_students_student_email_unique ON students(student_email); not for ssearch
+  ALTER TABLE students
+ADD CONSTRAINT uq_students_name_zipcode
+UNIQUE (student_name, student_zipcode);
+
+3. primary and foregin keys
+1. Foregin keys refers to the value on the table. 
+foreign key it self is not unique. 
+not we habe to create constraint or priomary key to make it unqie. 
+while delteing we can delete child or use delete cascade
+
+if we have to delete we need to dele teh recod at foreign key tables and then delte maun recod. if not that will be orphaned records.
+
+4. Partitioning 
+
+1M. 
+	500K : search 
+	
+	
+	1. Time Range based : partion300-304 : 30000 - 30040 
+	2. list based : partion_304 (30040) ,partition 300_304_302(30040,30041,30020)
+	3. Hash based : 
+	
+	mod 4 
+	value    remainder
+	3 : 3/4 = 3 
+	4 : 4/4 = 0 
+	5 : 5/4 = 1 
+	6 : 6/4 = 2 
+	9 : 9/4 = 1
+	
+	mod 6 : 0,1,2,3,4,5
+	
+	orderId ; 1234 
+	mod : 64 
+	1234/64 = 1 
+	
+	search  orderId; 
+	find 1234/64= 1 
+	select * from table 
+	where 
+	timebasedpartion = 202552 
+	partiton = 1 
+	and order id = 1234
+	
+5. normalistaion vs denomalisation 
+one to one
+one to many
+many to many
+
+6. Joins 
+7. Store proc and view
+8. ACID Properties and Transaction
+9. Sharding
+
+
+stundet -> address one to one 
+studnet -> courses one to many 
+courses -> instructions many to many 
+
+math, science -> sarah 
+math,science -> jeniffer
+
+math -> 
+
+appraoch 1: normalisation 
+courses -> 
+c-1, java
+c-2, sql
+
+teachers -> 
+t-1, john 
+t-2 ,chandra
+
+courses_teaches_mapping 
+c-1, t-1
+c-1, t-2
+c-2, t-1
+
+appraoach 2 : denormalisation
+c-1, java, t-1, john
+c-1, sql, t-2 , chandra
+c-2, java, t-1, john
+
+
+
+
+
+
+
+Db base concepts:
+
+CREATE TABLE students (
+    student_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    student_name VARCHAR(100),
+    student_email VARCHAR(100),
+    student_zipcode VARCHAR(10),
+    student_phone VARCHAR(20)
+);
+ 
+1. Indexing 
+	a. Primary Key : 	
+	  1. only one unique value is allowed for that column. 
+	  2. primary creates the index where we can query directly.
+	  3. Student_name = I want to search
+	  
+	  
+	  select * from students where student_name = 'Sneha'
+	  full scan and compare with each value in row and return the results.
+	  
+	  select * from students where student_id = '12344'
+	  will do lookup and give the record back directly.
+	  
+	b. index on student name: 
+	CREATE INDEX idx_students_student_name ON students(student_name);
+		1. allow duplicates but for faster search
+		
+	c. what happens If i have more indexes. 
+		1. When we are do indexes there should be balance of indexes. if not it will slows down the isnert and also search
+	  
+	  
+2. Unique constraints 
+  A. CREATE UNIQUE INDEX idx_students_student_email_unique ON students(student_email); not for ssearch
+  ALTER TABLE students
+ADD CONSTRAINT uq_students_name_zipcode
+UNIQUE (student_name, student_zipcode);
+
+3. primary and foregin keys
+1. Foregin keys refers to the value on the table. 
+foreign key it self is not unique. 
+not we habe to create constraint or priomary key to make it unqie. 
+while delteing we can delete child or use delete cascade
+
+if we have to delete we need to dele teh recod at foreign key tables and then delte maun recod. if not that will be orphaned records.
+
+4. Partitioning 
+
+1M. 
+	500K : search 
+	
+	
+	1. Time Range based : partion300-304 : 30000 - 30040 
+	2. list based : partion_304 (30040) ,partition 300_304_302(30040,30041,30020)
+	3. Hash based : 
+	
+	mod 4 
+	value    remainder
+	3 : 3/4 = 3 
+	4 : 4/4 = 0 
+	5 : 5/4 = 1 
+	6 : 6/4 = 2 
+	9 : 9/4 = 1
+	
+	mod 6 : 0,1,2,3,4,5
+	
+	orderId ; 1234 
+	mod : 64 
+	1234/64 = 1 
+	
+	search  orderId; 
+	find 1234/64= 1 
+	select * from table 
+	where 
+	timebasedpartion = 202552 
+	partiton = 1 
+	and order id = 1234
+	
+5. normalistaion vs denomalisation 
+one to one
+one to many
+many to many
+
+6. Joins 
+7. Store proc and view
+8. ACID Properties and Transaction
+9. Sharding
+
+
+stundet -> address one to one 
+studnet -> courses one to many 
+courses -> instructions many to many 
+
+math, science -> sarah 
+math,science -> jeniffer
+
+math -> 
+
+appraoch 1: normalisation 
+courses -> 
+c-1, java
+c-2, sql
+
+teachers -> 
+t-1, john 
+t-2 ,chandra
+
+courses_teaches_mapping 
+c-1, t-1
+c-1, t-2
+c-2, t-1
+
+appraoach 2 : denormalisation
+c-1, java, t-1, john
+c-1, sql, t-2 , chandra
+c-2, java, t-1, john
+
+
+
+
+
+
+
